@@ -1,0 +1,51 @@
+// Grafo radial dos módulos - engine-fluxo
+// Layout: núcleo central (Render Loop) + módulos como vértices de um polígono ao redor.
+// Adicionar um módulo novo = adicionar um vértice no polígono (uma aresta a mais do núcleo).
+//
+// Renderizar (engine radial obrigatório):
+//   twopi -Tsvg module_graph_radial.dot -o module_graph_radial.svg
+//   twopi -Tpng -Gdpi=150 module_graph_radial.dot -o module_graph_radial.png
+
+digraph engine_fluxo_radial {
+    layout = twopi;
+    root = "Core";
+    ranksep = 3.2;
+    mindist = 1.2;
+    overlap = false;
+    fontname = "Helvetica";
+
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.18,0.1"];
+    edge [fontname="Helvetica", fontsize=9, len=3.2, labeldistance=3];
+
+    // ---- Núcleo central ----
+    Core [shape=doublecircle, fillcolor="#F0997B", fontsize=13, width=1.4, fixedsize=true, label="Render\nLoop"];
+
+    // ---- Vértices do polígono (1 módulo = 1 vértice = 1 aresta do núcleo) ----
+    HardwareProfiler   [fillcolor="#D3D1C7", label="Core::HardwareProfiler"];
+    FastMath           [fillcolor="#D3D1C7", label="Core::FastMath"];
+    Disk               [shape=folder, fillcolor="#F5C4B3", label="Storage / Disco"];
+    SliceStreamer      [fillcolor="#9FE1CB", label="Stream::SliceStreamer"];
+    WindowController   [fillcolor="#9FE1CB", label="Stream::WindowController"];
+    RingBuffer         [fillcolor="#9FE1CB", label="Stream::RingBuffer"];
+    SpatialPartition   [fillcolor="#9FE1CB", label="Stream::SpatialPartition"];
+    BoundingReference  [fillcolor="#AFA9EC", label="Render::BoundingReference"];
+    ProjectivePipeline [fillcolor="#AFA9EC", label="Render::ProjectivePipeline"];
+    Frame              [shape=ellipse, fillcolor="#F0997B", label="Display / Framebuffer"];
+
+    // ---- Arestas do núcleo para cada vértice (define o polígono) ----
+    Core -> HardwareProfiler   [label="init 1x"];
+    Core -> Disk               [label="I/O"];
+    Core -> SliceStreamer      [label="por frame"];
+    Core -> WindowController   [label="por frame"];
+    Core -> BoundingReference  [label="por frame"];
+    Core -> ProjectivePipeline [label="por frame"];
+    Core -> Frame              [label="present"];
+
+    // ---- Arestas satélite (dependência entre vértices vizinhos, não passam pelo núcleo) ----
+    Disk -> SliceStreamer            [style=dashed];
+    SliceStreamer -> FastMath        [style=dashed];
+    SliceStreamer -> SpatialPartition [style=dashed];
+    WindowController -> RingBuffer    [style=dashed];
+    WindowController -> FastMath      [style=dashed];
+    BoundingReference -> ProjectivePipeline [penwidth=1.5];
+}

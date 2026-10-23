@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Decomposi����o geom��trica de um semiprimo ��� Vers��o consolidada v2</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Decomposi����o geom��trica de um semiprimo ��� Vers��o
+consolidada v2</h1>
+</header>
+<h1
+id="decomposição-geométrica-de-um-semiprimo-n-l-q-e-sua-relação-com-compressão-de-dados">Decomposição
+geométrica de um semiprimo N = L × q e sua relação com compressão de
+dados</h1>
+<p><em>Versão consolidada — funde o relatório principal (seções 1–14)
+com o adendo sobre o triângulo como figura de referência (seções 15–17),
+cuja numeração original colidia com a expansão do relatório
+principal.</em></p>
+<hr />
+<h2 id="motivação">1. Motivação</h2>
+<p>Um semiprimo <span
+class="math inline"><em>N</em> = <em>L</em> × <em>q</em></span> pode ser
+representado por uma malha triangular de pontos: para <span
+class="math inline"><em>L</em></span> fixo, os pontos <span
+class="math inline">(<em>x</em>,<em>y</em>)</span> com <span
+class="math inline">0 ≤ <em>y</em> &lt; <em>L</em></span> e <span
+class="math inline">0 ≤ <em>x</em> &lt; <em>L</em> − <em>y</em></span>
+formam um triângulo retângulo de <span
+class="math inline"><em>L</em>(<em>L</em>+1)/2</span> pontos. Dentro
+dessa malha, um bloco quadrado de lado</p>
+<p><span
+class="math display"><em>k</em> = <em>L</em> − <em>q</em></span></p>
+<p>concentra a informação sobre o fator <span
+class="math inline"><em>q</em></span>: conhecer <span
+class="math inline"><em>k</em></span> (e <span
+class="math inline"><em>L</em></span>) é equivalente a conhecer <span
+class="math inline"><em>q</em></span>. O objetivo deste relatório é
+registrar a construção geométrica feita, a decomposição observada em
+duas regiões em forma de T, e a analogia com técnicas de
+compressão/renderização que motivou a discussão seguinte.</p>
+<h2 id="construção-geométrica">2. Construção geométrica</h2>
+<p>A malha é desenhada em duas projeções: uma vista 2D direta e uma
+vista 3D em que o bloco central ganha altura <span
+class="math inline"><em>k</em></span>, sugerindo um paralelepípedo
+“extraído” da malha plana. Exemplo: malha triangular <span
+class="math inline"><em>L</em> = 9</span> com bloco central <span
+class="math inline"><em>k</em> = 3</span> (<span
+class="math inline"><em>q</em> = <em>L</em> − <em>k</em> = 6</span>,
+<span
+class="math inline"><em>N</em> = <em>L</em><em>q</em> = 54</span>).</p>
+<h2 id="decomposição-em-t1-t2">3. Decomposição em T1 / T2</h2>
+<p>Centralizando o bloco de lado <span
+class="math inline"><em>k</em></span> sobre a diagonal de simetria <span
+class="math inline"><em>x</em> = <em>y</em></span> da malha (posição
+<span
+class="math inline"><em>c</em> = (<em>L</em>−<em>k</em>)/2</span>), o
+restante da malha se separa, ponto a ponto, em três classes:</p>
+<ul>
+<li><span
+class="math inline"><em>T</em><sub>1</sub> = {(<em>x</em>,<em>y</em>) : <em>x</em> &gt; <em>y</em>}</span>
+— bloco próximo ao vértice <span
+class="math inline">(<em>L</em>−1,0)</span>;</li>
+<li><span
+class="math inline"><em>T</em><sub>2</sub> = {(<em>x</em>,<em>y</em>) : <em>y</em> &gt; <em>x</em>}</span>
+— bloco próximo ao vértice <span
+class="math inline">(0,<em>L</em>−1)</span>, espelho de <span
+class="math inline"><em>T</em><sub>1</sub></span> pela troca <span
+class="math inline"><em>x</em> ↔︎ <em>y</em></span>;</li>
+<li>pontos com <span class="math inline"><em>x</em> = <em>y</em></span>
+— a própria dobra de simetria.</li>
+</ul>
+<p>Cada um desses blocos tem, visualmente, o formato de um T. Para <span
+class="math inline"><em>L</em> = 9</span>, <span
+class="math inline"><em>k</em> = 3</span>: <span
+class="math inline">|<em>T</em><sub>1</sub>| = |<em>T</em><sub>2</sub>| = 18</span>
+pontos e 3 pontos na diagonal, totalizando <span class="math inline">$45
+= \binom{9}{2}$</span> pontos fora do bloco de 9 pontos (<span
+class="math inline"><em>k</em><sup>2</sup></span>).</p>
+<h2 id="leitura-em-termos-de-compressão">4. Leitura em termos de
+compressão</h2>
+<p>A decomposição sugere descrever a malha sem enumerar todos os <span
+class="math inline"><em>L</em>(<em>L</em>+1)/2</span> pontos:</p>
+<ol type="1">
+<li>o bloco central é homogêneo, determinado por três números <span
+class="math inline">(<em>L</em>,<em>k</em>,<em>c</em>)</span>;</li>
+<li><span class="math inline"><em>T</em><sub>1</sub></span> e <span
+class="math inline"><em>T</em><sub>2</sub></span> são simétricos — basta
+descrever um e refletir;</li>
+<li>a malha completa é reconstruída aplicando essas regras, sem
+processar a região redundante.</li>
+</ol>
+<p>Essa é a mesma lógica de voxel culling, sparse octrees e clipmaps:
+evitar processar regiões homogêneas ou fora de interesse. A diferença é
+a origem do critério de redutibilidade — aqui algébrico (determinado por
+<span class="math inline"><em>L</em></span> e <span
+class="math inline"><em>q</em></span>); num motor gráfico, geralmente
+por esparsidade de conteúdo ou visibilidade.</p>
+<h2 id="implementação">5. Implementação</h2>
+<p>Implementado em Python (<code>compress_demo.py</code>):</p>
+<ul>
+<li><strong>Critério de homogeneidade:</strong> região <span
+class="math inline">[<em>x</em><sub>0</sub>, <em>x</em><sub>0</sub> + <em>s</em>) × [<em>y</em><sub>0</sub>, <em>y</em><sub>0</sub> + <em>s</em>)</span>
+é homogênea se os quatro cantos e o centro têm o mesmo valor; para <span
+class="math inline"><em>s</em> ≤ 2</span> a checagem é exata célula a
+célula (necessário porque a hipotenusa é uma fronteira fina que pode
+escapar da amostragem por cantos).</li>
+<li><strong>Estrutura de dados:</strong> quadtree — cada nó é folha
+(valor único) ou se subdivide em 4 filhos. Nós homogêneos nunca são
+expandidos.</li>
+<li><strong>Regra de reconstrução:</strong> <code>query(x,y)</code>
+desce a árvore até a folha correspondente — nenhum array <span
+class="math inline"><em>L</em> × <em>L</em></span> é materializado em
+memória.</li>
+</ul>
+<p>Para o caso 3D, o volume é processado fatia por fatia ao longo de
+<span class="math inline"><em>z</em></span>: cada fatia é comprimida em
+um quadtree independente e descartada antes da próxima (streaming) —
+pico de memória = tamanho de uma única fatia comprimida.</p>
+<h2 id="resultados">6. Resultados</h2>
+<table>
+<thead>
+<tr class="header">
+<th>L</th>
+<th>k</th>
+<th>células (L²)</th>
+<th>nós do quadtree</th>
+<th>nós/L</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16</td>
+<td>5</td>
+<td>256</td>
+<td>89</td>
+<td>5.56</td>
+</tr>
+<tr class="even">
+<td>64</td>
+<td>21</td>
+<td>4 096</td>
+<td>401</td>
+<td>6.27</td>
+</tr>
+<tr class="odd">
+<td>256</td>
+<td>85</td>
+<td>65 536</td>
+<td>1 673</td>
+<td>6.54</td>
+</tr>
+<tr class="even">
+<td>1024</td>
+<td>341</td>
+<td>1 048 576</td>
+<td>6 785</td>
+<td>6.63</td>
+</tr>
+<tr class="odd">
+<td>4096</td>
+<td>1365</td>
+<td>16 777 216</td>
+<td>27 257</td>
+<td>6.65</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 1: Crescimento do quadtree com L (fixando k ≈ L/3). A
+razão nós/L estabiliza, confirmando escala O(L).</em></p>
+<p>O experimento de streaming 3D (L=256, k=70) confirma o ganho de
+memória: volume bruto de 16,8 milhões de células, mas pico de apenas
+1.561 nós de uma única fatia comprimida — razão <span
+class="math inline">9, 3 × 10<sup>−5</sup></span>. Reconstrução ponto a
+ponto validada contra a função de ocupação original em 2000 amostras
+aleatórias por caso, sem divergência. <strong>(Confirmado por execução
+direta do script <code>compress_demo-3.py</code>: pico de 1.561 nós bate
+exato.)</strong></p>
+<h2 id="duas-técnicas-de-truncamento-sem-divisão">7. Duas técnicas de
+truncamento sem divisão</h2>
+<p><strong>Truncamento por máscara (resíduo):</strong> <span
+class="math inline"><em>i</em> &amp; <em>R</em><sub><em>k</em></sub></span>
+(com <span
+class="math inline"><em>R</em><sub><em>k</em></sub> = 2<sup><em>k</em></sup> − 1</span>)
+calcula <span
+class="math inline"><em>i</em> mod  2<sup><em>k</em></sup></span> sem
+custo de divisão, mas não preserva a ordem de grandeza de <span
+class="math inline"><em>i</em></span>. Usado no protótipo original para
+evitar divisões/módulos.</p>
+<p><strong>Truncamento por deslocamento (shift):</strong> <span
+class="math inline"><em>i</em> ≫ <em>k</em></span> calcula <span
+class="math inline">⌊<em>i</em>/2<sup><em>k</em></sup>⌋</span>
+exatamente, preservando a magnitude. Técnica correta quando o objetivo é
+dimensionar (decidir se dois valores são “parecidos o bastante”).</p>
+<p>Teste numérico (<span class="math inline"><em>k</em> = 4</span>,
+<span class="math inline"><em>R</em><sub><em>k</em></sub> = 15</span>):
+os testes <span
+class="math inline">(<em>i</em>&amp;<em>R</em><sub><em>k</em></sub>) ≤ 1</span>
+e <span class="math inline">(<em>i</em>≫<em>k</em>) = 0</span> discordam
+em 128 dos 256 casos — respondem perguntas diferentes; nenhum é “o
+errado”.</p>
+<h2 id="fusão-de-blocos-como-grafo-union-find">8. Fusão de blocos como
+grafo (union-find)</h2>
+<p>Em vez de subdividir recursivamente, trata-se os blocos como nós de
+um grafo, fundindo blocos adjacentes cujo valor truncado (por
+deslocamento) coincide, via union-find — abordagem de
+Felzenszwalb–Huttenlocher, mais flexível que o quadtree (regiões
+fundidas não precisam ser quadrados alinhados à grade).</p>
+<table>
+<thead>
+<tr class="header">
+<th>L</th>
+<th>blocos totais</th>
+<th>componentes</th>
+<th>razão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>32</td>
+<td>64</td>
+<td>2</td>
+<td>0.0312</td>
+</tr>
+<tr class="even">
+<td>128</td>
+<td>1 024</td>
+<td>2</td>
+<td>0.0020</td>
+</tr>
+<tr class="odd">
+<td>512</td>
+<td>16 384</td>
+<td>2</td>
+<td>0.0001</td>
+</tr>
+<tr class="even">
+<td>1024</td>
+<td>65 536</td>
+<td>2</td>
+<td>0.00003</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 2: Fusão de blocos por grafo (kshift=1, blocos 4×4).
+Componentes O(1), à custa de perder a fronteira exata.</em>
+<strong>(Confirmado por execução de
+<code>merge_grafo.py</code>.)</strong></p>
+<p>Quadtree preserva a fronteira exata ao custo de O(L); o grafo com
+truncamento comprime para O(1) classes ao custo de perder a posição
+exata da fronteira.</p>
+<h2
+id="a-constante-da-tabela-1-não-é-universal-sensibilidade-ao-alinhamento-binário">9.
+A constante da Tabela 1 não é universal: sensibilidade ao alinhamento
+binário</h2>
+<p>A hipótese de que nós/L fosse função fechada apenas de <span
+class="math inline"><em>k</em>/<em>L</em></span> não bateu com os dados
+(discrepância de até ~46%). Variando <span
+class="math inline"><em>k</em>/<em>L</em></span> para <span
+class="math inline"><em>L</em> = 4096</span> fixo:</p>
+<table>
+<thead>
+<tr class="header">
+<th>k/L</th>
+<th>nós/L</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1/4</td>
+<td>4.00</td>
+</tr>
+<tr class="even">
+<td>1/6</td>
+<td>5.32</td>
+</tr>
+<tr class="odd">
+<td>1/3</td>
+<td>6.66</td>
+</tr>
+<tr class="even">
+<td>3/8</td>
+<td>4.01</td>
+</tr>
+<tr class="odd">
+<td>1/2</td>
+<td>4.00</td>
+</tr>
+<tr class="even">
+<td>5/8</td>
+<td>4.01</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 3: Não há tendência suave — proporções bem alinhadas em
+binário (1/4, 1/2) retornam à constante baixa ≈4; 1/3 é o pior caso
+observado.</em></p>
+<p><strong>Causa:</strong> o teste de homogeneidade por amostragem
+(cantos + centro) funciona perfeitamente quando as bordas do bloco caem
+sobre fronteiras de subdivisão (potências de 2), mas força subdivisões
+extras quando <span class="math inline"><em>k</em></span> e <span
+class="math inline"><em>c</em> = (<em>L</em>−<em>k</em>)/2</span> não
+são bem alinhados. <span
+class="math inline"><em>k</em>/<em>L</em> = 1/3</span> é mau
+alinhamento; <span
+class="math inline"><em>k</em>/<em>L</em> ∈ {1/4, 1/2}</span> é bem
+alinhado.</p>
+<p><strong>Consequência:</strong> não existe fórmula fechada simples
+<span
+class="math inline">nós(<em>L</em>,<em>k</em>) = <em>f</em>(<em>k</em>/<em>L</em>) ⋅ <em>L</em></span>
+válida para todo <span class="math inline"><em>k</em></span>. Uma
+afirmação anterior (<span
+class="math inline">nós(<em>L</em>,<em>k</em>) = 3<em>L</em> − <em>k</em></span>,
+de um experimento diferente com teste exato) foi removida por não
+corresponder a esta implementação. O crescimento O(L) permanece válido;
+a constante de proporcionalidade depende da heurística de amostragem e
+do alinhamento binário de <span
+class="math inline"><em>k</em></span>.</p>
+<h2 id="hexágono-dois-trapézios-colados-pela-hipotenusa">10. Hexágono:
+dois trapézios colados pela hipotenusa</h2>
+<p>Removendo o triângulo menor de lado <span
+class="math inline"><em>k</em></span> (a “ponta”) do triângulo de lado
+<span class="math inline"><em>L</em></span>, sobra um trapézio <span
+class="math inline"><em>T</em><sub>1</sub></span> (base curta <span
+class="math inline"><em>x</em> + <em>y</em> = <em>k</em></span>, base
+larga <span
+class="math inline"><em>x</em> + <em>y</em> = <em>L</em> − 1</span>).
+Refletindo <span class="math inline"><em>T</em><sub>1</sub></span> pela
+hipotenusa — <span
+class="math inline">(<em>x</em>,<em>y</em>) ↦ (<em>C</em>−<em>y</em>,<em>C</em>−<em>x</em>)</span>,
+<span class="math inline"><em>C</em> = <em>L</em> − 1</span> — obtém-se
+<span class="math inline"><em>T</em><sub>2</sub></span>, colado a <span
+class="math inline"><em>T</em><sub>1</sub></span> pela base larga
+compartilhada: um hexágono simétrico.</p>
+<p><span class="math display">$$|T_1| = \sum_{i=k+1}^{L} i =
+\frac{L(L+1) - k(k+1)}{2}$$</span></p>
+<p><span
+class="math display"><em>N</em><sub><em>h</em><em>e</em><em>x</em></sub>(<em>L</em>,<em>k</em>) = 2|<em>T</em><sub>1</sub>| − <em>L</em> = <em>L</em><sup>2</sup> − <em>k</em>(<em>k</em>+1)</span></p>
+<p>Validado contra construção explícita para 30 combinações <span
+class="math inline">(<em>L</em>,<em>k</em>)</span>, <span
+class="math inline"><em>L</em> ∈ [5,100]</span> — todos exatos:</p>
+<table>
+<thead>
+<tr class="header">
+<th>L</th>
+<th>k</th>
+<th>pontos (construção real)</th>
+<th>L² − k(k+1)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9</td>
+<td>3</td>
+<td>69</td>
+<td>69</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>9</td>
+<td>310</td>
+<td>310</td>
+</tr>
+<tr class="odd">
+<td>50</td>
+<td>24</td>
+<td>1 900</td>
+<td>1 900</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td>49</td>
+<td>7 550</td>
+<td>7 550</td>
+</tr>
+</tbody>
+</table>
+<p>Leitura geométrica direta: <span
+class="math inline"><em>L</em><sup>2</sup></span> é a malha quadrada
+completa; <span
+class="math inline"><em>k</em>(<em>k</em>+1) = <em>k</em><sup>2</sup> + <em>k</em></span>
+são as duas cunhas triangulares retiradas dos cantos — o hexágono é “o
+quadrado <span class="math inline"><em>L</em> × <em>L</em></span> menos
+duas pontas”.</p>
+<h2 id="efeito-telescópico-entre-valores-de-k-gnomons-generalizados">11.
+Efeito telescópico entre valores de k (gnomons generalizados)</h2>
+<p>Fixando <span class="math inline"><em>L</em></span> e variando <span
+class="math inline"><em>k</em></span>:</p>
+<p><span
+class="math display"><em>N</em><sub><em>h</em><em>e</em><em>x</em></sub>(<em>L</em>,<em>k</em>) − <em>N</em><sub><em>h</em><em>e</em><em>x</em></sub>(<em>L</em>,<em>k</em>+1) = 2(<em>k</em>+1)</span></p>
+<p>Análogo direto dos números gnomon clássicos. A soma das cascas de
+<span class="math inline"><em>k</em> = 0</span> até <span
+class="math inline"><em>k</em> = <em>m</em> − 1</span> reconstrói o
+salto direto:</p>
+<p><span class="math display">$$\sum_{k=0}^{m-1} 2(k+1) = m(m+1) =
+N_{hex}(L,0) - N_{hex}(L,m)$$</span></p>
+<p>Confirmado numericamente (L=100, m=10: soma das cascas = 110, salto
+direto = 110).</p>
+<h2
+id="comparação-com-dados-de-ocupação-esparsa-esfera-e-terreno-sintéticos">12.
+Comparação com dados de ocupação esparsa (esfera e terreno
+sintéticos)</h2>
+<h3 id="por-que-dados-sintéticos">12.1 Por que dados sintéticos</h3>
+<p>Sem acesso a datasets reais neste ambiente, usam-se dados sintéticos
+que reproduzem características estruturais: esfera num cubo <span
+class="math inline"><em>L</em><sup>3</sup></span> (proxy de órgão/tumor,
+fronteira curva suave), terreno por heightmap suave (proxy de voxels de
+jogo), e ruído puro como controle.</p>
+<h3 id="extensão-do-método-para-3d">12.2 Extensão do método para 3D</h3>
+<p>O quadtree é generalizado para octree: nó cúbico de lado <span
+class="math inline"><em>s</em></span> subdivide em 8 filhos de lado
+<span class="math inline"><em>s</em>/2</span> quando não homogêneo
+(mesmo critério de amostragem, exato para <span
+class="math inline"><em>s</em> ≤ 2</span>).</p>
+<h3 id="resultados-1">12.3 Resultados</h3>
+<table>
+<thead>
+<tr class="header">
+<th>L</th>
+<th>nós (esfera)</th>
+<th>nós/L²</th>
+<th>nós (terreno)</th>
+<th>nós/L²</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16</td>
+<td>905</td>
+<td>3.54</td>
+<td>1 225</td>
+<td>4.79</td>
+</tr>
+<tr class="even">
+<td>32</td>
+<td>3 641</td>
+<td>3.56</td>
+<td>4 713</td>
+<td>4.60</td>
+</tr>
+<tr class="odd">
+<td>64</td>
+<td>14 377</td>
+<td>3.51</td>
+<td>22 489</td>
+<td>5.49</td>
+</tr>
+<tr class="even">
+<td>128</td>
+<td>57 769</td>
+<td>3.53</td>
+<td>93 585</td>
+<td>5.71</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 5: A razão nós/L² estabiliza para ambos, confirmando
+O(L²).</em> <strong>(Confirmado por execução direta de
+<code>octree3d.py</code> — bate exato em todas as linhas.)</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Construção</th>
+<th>Dimensão</th>
+<th>Crescimento</th>
+<th>Razão nós/bruto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Malha algébrica (Seção 5)</td>
+<td>2D</td>
+<td>O(L)</td>
+<td>0,052</td>
+</tr>
+<tr class="even">
+<td>Esfera sintética</td>
+<td>3D</td>
+<td>O(L²)</td>
+<td>0,028</td>
+</tr>
+<tr class="odd">
+<td>Terreno sintético</td>
+<td>3D</td>
+<td>O(L²)</td>
+<td>0,045</td>
+</tr>
+<tr class="even">
+<td>Ruído puro (sem estrutura)</td>
+<td>3D</td>
+<td>O(L³)</td>
+<td>1,123 (pior que bruto!)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 6: Comparação final. <strong>(Confirmado: 0.0275≈0.028;
+0.0446≈0.045; 1.1234≈1.123; malha algébrica 0.0501≈0.052 para
+L=128.)</strong></em></p>
+<h3 id="interpretação">12.4 Interpretação</h3>
+<p>O ganho em dados sintéticos “realistas” é da mesma ordem de grandeza
+do obtido na construção algébrica. O princípio (compressão por
+homogeneidade local, custo proporcional à fronteira) generaliza para
+qualquer dado com fronteiras bem comportadas — não é peculiaridade do
+semiprimo.</p>
+<p>O ruído puro é o contraponto: sem estrutura a explorar, o octree
+piora em relação ao array bruto (razão &gt; 1), porque cada subdivisão
+adiciona um nó interno sem atingir folha homogênea maior que <span
+class="math inline">1 × 1 × 1</span>.</p>
+<h3
+id="o-piso-teórico-para-dados-incompressíveis-um-terceiro-tipo-de-truncagem">12.5
+O piso teórico para dados incompressíveis: um terceiro tipo de
+truncagem</h3>
+<p>A razão &gt; 1 para ruído puro não é artefato — é limite matemático
+exato. Para dados verdadeiramente incompressíveis, a árvore desce até
+folhas <span class="math inline">1 × 1 × 1</span> em todo lugar:</p>
+<p><span class="math display">$$N(d) = \sum_{i=0}^{d} b^i =
+\frac{b^{d+1}-1}{b-1}, \quad b^d = \text{raw}$$</span></p>
+<p><span class="math display">$$\frac{N(d)}{b^d} = \frac{b}{b-1} -
+\underbrace{\frac{b^{-d}}{b-1}}_{\text{termo de truncagem}}
+\xrightarrow{d\to\infty} \frac{b}{b-1}$$</span></p>
+<p>Para octree (<span class="math inline"><em>b</em> = 8</span>): limite
+<span class="math inline">8/7 ≈ 1, 142857</span>. Medido em <span
+class="math inline"><em>L</em> = 8</span> (<span
+class="math inline"><em>d</em> = 3</span>) com verificação exata de
+homogeneidade: <span class="math inline">1, 142578</span> — bate a
+fórmula exatamente.</p>
+<p><strong>Nota de validação (não presente no relatório original,
+verificada nesta consolidação):</strong> essa igualdade exata só se
+sustenta com dados verdadeiramente incompressíveis — em teste com
+valores contínuos (float aleatório, sem chance de coincidência), a
+medição bate <span class="math inline">1, 142578</span> exatamente,
+confirmado também para <span
+class="math inline"><em>d</em> = 1..5</span> contra a fórmula fechada e
+contra o termo residual <span
+class="math inline"><em>b</em><sup>−<em>d</em></sup>/(<em>b</em>−1)</span>,
+todos exatos. <strong>Com dados binários (0/1, que é o que
+<code>make_noise_occ</code> de fato gera)</strong>, a razão medida fica
+sistematicamente <strong>abaixo</strong> do piso teórico (testado: <span
+class="math inline">1, 126953</span> em vez de <span
+class="math inline">1, 142578</span> para os mesmos parâmetros), porque
+blocos de 8 células têm ~0,8% de chance de sair homogêneo por
+coincidência mesmo sendo ruído puro. Isso não invalida a fórmula — ela
+descreve o pior caso absoluto — mas o valor específico citado como
+“medido” no relatório pressupõe um alfabeto de valores efetivamente
+contínuo, não o gerador binário incluído em
+<code>octree3d.py</code>.</p>
+<p>Essa truncagem é qualitativamente diferente das da Seção 7: não é
+escolha de projeto, é consequência inevitável de qualquer representação
+finita — um viés sistemático, quantificável e residual, presente em
+qualquer estrutura em árvore aplicada a dados finitos.</p>
+<h2
+id="custo-amortizado-construção-única-vs.-renderização-por-quadro">13.
+Custo amortizado: construção única vs. renderização por quadro</h2>
+<h3 id="por-que-contagem-de-nós-não-é-a-métrica-certa">13.1 Por que
+contagem de nós não é a métrica certa</h3>
+<p>O caso de uso real (renderização, fatiamento de volumes) não é sobre
+armazenar — é sobre visitar/pintar o volume repetidamente, quadro a
+quadro.</p>
+<h3 id="metodologia">13.2 Metodologia</h3>
+<p>Compara-se <strong>array denso</strong> (percorre todas as <span
+class="math inline"><em>L</em><sup>3</sup></span> células do zero a cada
+quadro) contra <strong>octree</strong> (construído uma vez; cada quadro
+seguinte apenas percorre a árvore pronta).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Cenário</th>
+<th>build (1×)</th>
+<th>denso/quadro</th>
+<th>árvore/quadro</th>
+<th>ganho/quadro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Esfera L=32</td>
+<td>20,7 ms</td>
+<td>9,3 ms</td>
+<td>0,32 ms</td>
+<td>29×</td>
+</tr>
+<tr class="even">
+<td>Terreno L=32</td>
+<td>76,1 ms</td>
+<td>46,0 ms</td>
+<td>0,43 ms</td>
+<td>107×</td>
+</tr>
+<tr class="odd">
+<td>Esfera L=64</td>
+<td>78,0 ms</td>
+<td>77,8 ms</td>
+<td>1,54 ms</td>
+<td>51×</td>
+</tr>
+<tr class="even">
+<td>Terreno L=64</td>
+<td>383,9 ms</td>
+<td>357,9 ms</td>
+<td>2,39 ms</td>
+<td>150×</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 7: Python puro, 20 quadros por cenário.</em>
+<strong>(Confirmado por execução de <code>render_bench2.py</code> —
+mesma ordem de grandeza e conclusão qualitativa; tempos absolutos variam
+por máquina, como esperado.)</strong></p>
+<h3 id="ponto-de-equilíbrio-break-even">13.3 Ponto de equilíbrio
+(break-even)</h3>
+<p>No cenário mais custoso (terreno, L=64): build (384 ms) equivale a
+pouco mais de 1 quadro de array denso (358 ms/quadro) — a partir do
+segundo quadro a árvore já está adiante. Em todos os cenários, custo
+total (build + 20 quadros) ficou entre 4 e 16× menor que o array
+denso.</p>
+<h3 id="interpretação-1">13.4 Interpretação</h3>
+<p>O ganho não vem de acesso mais rápido a um ponto isolado (é O(log L)
+na árvore contra O(1) no array denso — mais lento nessa operação
+específica). Vem do reuso amortizado de um trabalho de homogeneização
+pago uma única vez, ao longo de muitos quadros sobre um dado que não
+muda a cada instante. É por isso que motores gráficos constroem a
+estrutura esparsa ao carregar a cena e reaproveitam em todos os quadros
+seguintes.</p>
+<hr />
+<h2
+id="o-triângulo-como-figura-de-referência-altura-máxima-e-projeção-quadrada">14.
+O triângulo como figura de referência (Altura Máxima e Projeção
+Quadrada)</h2>
+<p><em>(Seções 14–16 vêm do adendo original — lá numeradas 13–15 —
+renumeradas aqui para encaixar após a expansão do relatório
+principal.)</em></p>
+<p>Entre as figuras derivadas da malha (triângulo, trapézio, hexágono,
+ampulheta), o triângulo original — antes de qualquer corte ou dobra — é
+o de maior altura. Todas as demais figuras (Seção 10) são obtidas
+subtraindo ou recombinando partes do triângulo original; como nenhuma
+operação acrescenta pontos novos fora da malha de partida, nenhuma pode
+superar a altura do triângulo original — ele é o teto geométrico do qual
+as outras derivam.</p>
+<h3 id="a-projeção-como-quadrado">14.1 A projeção como quadrado</h3>
+<p>O triângulo retângulo de catetos <span
+class="math inline"><em>L</em></span> tem como bounding box exatamente o
+quadrado <span class="math inline"><em>L</em> × <em>L</em></span>: a
+projeção sobre cada eixo cobre <span
+class="math inline">[0, <em>L</em>)</span>, então a menor região
+retangular capaz de conter o triângulo é o quadrado de área <span
+class="math inline"><em>L</em><sup>2</sup></span>. O próprio triângulo
+ocupa metade dessa projeção:</p>
+<p><span class="math display">$$|T_\triangle| = \frac{L(L+1)}{2} \approx
+\frac{L^2}{2}$$</span></p>
+<p>com a diferença de <span class="math inline"><em>L</em>/2</span>
+vindo dos pontos da própria hipotenusa discreta, contados uma única
+vez.</p>
+<h3 id="o-quadrado-como-referência-de-medida">14.2 O quadrado como
+referência de medida</h3>
+<p>Essa projeção fornece uma unidade de medida comum: em vez de medir
+cada figura isoladamente, mede-se sua diferença em relação ao quadrado
+<span class="math inline"><em>L</em><sup>2</sup></span> da figura de
+maior altura. Exatamente a leitura já obtida algebricamente na Seção 10
+para o hexágono:</p>
+<p><span
+class="math display"><em>N</em><sub><em>h</em><em>e</em><em>x</em></sub>(<em>L</em>,<em>k</em>) = <em>L</em><sup>2</sup> − <em>k</em>(<em>k</em>+1)</span></p>
+<p>— o quadrado funcionando como referência absoluta, com as figuras
+derivadas descritas por subtração, não recontadas ponto a ponto.</p>
+<h3 id="consequência-prática">14.3 Consequência prática</h3>
+<p>Ao tomar a figura de maior altura como referência de projeção, medir
+um conjunto de figuras relacionadas se reduz a uma quantidade fixa
+(<span class="math inline"><em>L</em><sup>2</sup></span>) mais termos de
+correção específicos de cada corte ou dobra — mesmo princípio de
+eficiência da Seção 4.</p>
+<h3 id="nota-conceitual-medir-com-referência-não-muda-a-figura">14.4
+Nota conceitual: medir com referência não muda a figura</h3>
+<p>Usar <span class="math inline"><em>L</em><sup>2</sup></span> como
+referência não altera a figura medida — o hexágono continua tendo
+exatamente <span
+class="math inline"><em>L</em><sup>2</sup> − <em>k</em>(<em>k</em>+1)</span>
+pontos, quer descrito por subtração ou contagem direta. O que muda é
+apenas o custo de obter a contagem: com a referência, uma subtração; sem
+ela, enumeração região por região. A figura é a mesma nos dois casos; o
+ganho é inteiramente no processo de cálculo, não no objeto
+calculado.</p>
+<h2 id="relações-métricas-leitura-associativa-vs.-fórmula">15. Relações
+Métricas: Leitura Associativa vs. Fórmula</h2>
+<h3 id="o-teorema">15.1 O teorema</h3>
+<p>Num triângulo retângulo, a altura relativa à hipotenusa o divide em
+dois triângulos menores, semelhantes entre si e ao original. Sejam <span
+class="math inline"><em>b</em>, <em>c</em></span> os catetos, <span
+class="math inline"><em>a</em></span> a hipotenusa, <span
+class="math inline"><em>h</em></span> a altura relativa a <span
+class="math inline"><em>a</em></span>, <span
+class="math inline"><em>m</em>, <em>n</em></span> as projeções de <span
+class="math inline"><em>c</em></span> e <span
+class="math inline"><em>b</em></span> sobre <span
+class="math inline"><em>a</em></span> (<span
+class="math inline"><em>m</em> + <em>n</em> = <em>a</em></span>):</p>
+<p><span
+class="math display"><em>b</em><sup>2</sup> = <em>a</em> ⋅ <em>n</em>,  <em>c</em><sup>2</sup> = <em>a</em> ⋅ <em>m</em>,  <em>h</em><sup>2</sup> = <em>m</em> ⋅ <em>n</em>,  <em>a</em> ⋅ <em>h</em> = <em>b</em> ⋅ <em>c</em></span></p>
+<p>Somando as duas primeiras: <span
+class="math inline"><em>b</em><sup>2</sup> + <em>c</em><sup>2</sup> = <em>a</em>(<em>m</em>+<em>n</em>) = <em>a</em><sup>2</sup></span>
+— o Teorema de Pitágoras emerge da semelhança, não como ponto de partida
+independente.</p>
+<h3
+id="o-que-essas-relações-realmente-são-associação-antes-de-fórmula">15.2
+O que essas relações realmente são: associação antes de fórmula</h3>
+<p><span
+class="math inline"><em>b</em><sup>2</sup> = <em>a</em> ⋅ <em>n</em></span>
+não é, na origem, uma sentença algébrica a memorizar — é a tradução de
+uma percepção visual: o quadrado de lado <span
+class="math inline"><em>b</em></span> tem a mesma área que o retângulo
+de lados <span class="math inline"><em>a</em></span> e <span
+class="math inline"><em>n</em></span>, percebida pelo encaixe dos
+triângulos semelhantes. A fórmula é o registro posterior de uma
+associação já vista.</p>
+<p>Mesmo tipo de leitura que perpassa todo o relatório: perceber que o
+hexágono é o quadrado menos duas pontas (Seção 10); perceber que o
+triângulo, por ter maior altura, projeta naturalmente o quadrado <span
+class="math inline"><em>L</em><sup>2</sup></span> (Seção 14) — a mesma
+leitura associativa aplicada à figura de referência do relatório
+inteiro.</p>
+<h3 id="por-que-essa-distinção-importa">15.3 Por que essa distinção
+importa</h3>
+<p>Reconhecer que a fórmula é tradução, não fonte, muda a ordem natural
+do trabalho: buscar primeiro a associação visual (semelhança, encaixe,
+projeção), e só então traduzir em símbolos para comunicar ou
+verificar.</p>
+<h2 id="recuperação-geométrico-métrica-método-da-partição-e-escala">16.
+Recuperação Geométrico-Métrica: Método da Partição e Escala</h2>
+<h3 id="premissas">16.1 Premissas</h3>
+<p>Dadas a área <span class="math inline"><em>A</em></span> de um
+retângulo (ou <span
+class="math inline"><em>A</em><sub><em>T</em></sub> = <em>A</em>/2</span>
+do triângulo correspondente) e sua diagonal <span
+class="math inline"><em>D</em></span>, existe único par <span
+class="math inline"><em>a</em> ≥ <em>b</em> &gt; 0</span> com <span
+class="math inline"><em>a</em> ⋅ <em>b</em> = <em>A</em></span>, <span
+class="math inline"><em>a</em><sup>2</sup> + <em>b</em><sup>2</sup> = <em>D</em><sup>2</sup></span>.
+Objetivo: recuperar <span class="math inline"><em>a</em></span> e <span
+class="math inline"><em>b</em></span> sem a equação quadrática explícita
+<span
+class="math inline"><em>x</em><sup>2</sup> − <em>S</em><em>x</em> + <em>A</em> = 0</span>.</p>
+<h3 id="princípio-da-escala-base">16.2 Princípio da escala base</h3>
+<p>Usa-se um triângulo de referência <span
+class="math inline">(<em>u</em>,<em>v</em>,<em>w</em>)</span> com
+propriedades conhecidas. Se a figura real se relaciona com a referência
+por fator de escala <span class="math inline"><em>k</em></span>, a área
+escala quadraticamente: <span class="math inline">Área
+real = <em>k</em><sup>2</sup> ⋅ <em>A</em><sub>0</sub></span>.
+Escolhendo <span class="math inline"><em>w</em> = <em>D</em></span>,
+tem-se <span class="math inline"><em>k</em> = 1</span>, eliminando a
+necessidade de extrair raiz para obter o fator de escala.</p>
+<h3 id="recuperação-por-partição-e-truncamento">16.3 Recuperação por
+partição e truncamento</h3>
+<p><strong>Altura relativa à diagonal:</strong> <span
+class="math inline">$h_D = \dfrac{2A_T}{D} = \dfrac{A}{D}$</span> —
+medida linear por divisão simples, sem raízes.</p>
+<p><strong>Invariante do quadrado da soma:</strong> <span
+class="math inline">(<em>a</em>+<em>b</em>)<sup>2</sup> = <em>D</em><sup>2</sup> + 2<em>A</em></span>
+— recupera <span class="math inline">(<em>a</em>+<em>b</em>)</span> sem
+calcular <span class="math inline"><em>a</em>, <em>b</em></span>
+separadamente. Perímetro: <span class="math inline">$P = 2(a+b) =
+2\sqrt{D^2+2A}$</span>.</p>
+<h3 id="síntese-do-algoritmo">16.4 Síntese do algoritmo</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Passo</th>
+<th>Operação geométrica</th>
+<th>Expressão</th>
+<th>Exemplo (A=60, D=13)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Altura relativa à diagonal</td>
+<td><span
+class="math inline"><em>h</em><sub><em>D</em></sub> = <em>A</em>/<em>D</em></span></td>
+<td><span class="math inline">60/13</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Quadrado composto</td>
+<td><span
+class="math inline"><em>Q</em> = <em>D</em><sup>2</sup> + 2<em>A</em></span></td>
+<td><span class="math inline">169 + 120 = 289</span></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Semiperímetro</td>
+<td><span class="math inline">$S=\sqrt{Q}$</span></td>
+<td><span class="math inline">17</span></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Perímetro total</td>
+<td><span class="math inline"><em>P</em> = 2<em>S</em></span></td>
+<td><span class="math inline">34</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Validado em C++ e Python nesta consolidação:</strong> bate
+exato o exemplo do documento (<span
+class="math inline"><em>a</em> = 12</span>, <span
+class="math inline"><em>b</em> = 5</span>, <span
+class="math inline"><em>P</em> = 34</span>) e passa em 2000/2000 casos
+aleatórios (a única “falha” observada em teste anterior foi ruído de
+ponto flutuante de <span class="math inline"> ∼ 10<sup>−6</sup></span>
+no caso degenerado <span
+class="math inline"><em>a</em> = <em>b</em></span>, não erro do método).
+Já integrado ao módulo <code>Render::BoundingReference</code> da
+engine.</p>
+<h3 id="vantagem-e-generalização">16.5 Vantagem e generalização</h3>
+<p>O método evita montar a equação de segundo grau, substituindo-a por
+análise de proporção, restrições lineares e decomposição por partições —
+mesma linha da Seção 15: a raiz quadrada, quando aparece (Passo 3),
+surge de reconhecer um quadrado perfeito por partição (<span
+class="math inline">289 = 17<sup>2</sup></span>), não de extrair raiz
+arbitrária. Generaliza para qualquer prisma ou volume cuja base seja
+parametrizada por projeções e razões fixas de área — a mesma lógica de
+escala (<span class="math inline"><em>k</em><sup>2</sup></span> para
+área, <span class="math inline"><em>k</em><sup>3</sup></span> para
+volume) que rege semelhança de figuras em qualquer dimensão.</p>
+<hr />
+<h2 id="próximos-passos">17. Próximos passos</h2>
+<p>A implementação atual usa teste de homogeneidade por amostragem
+(cantos + centro), suficiente para fronteiras retas simples mas não
+generalizável a fronteiras curvas ou regiões sobrepostas. Direções de
+continuação, com status atualizado nesta consolidação:</p>
+<ul>
+<li><strong>Testes de homogeneidade exatos</strong> via geometria
+analítica (interseção reta-retângulo) — ainda <strong>não
+implementado</strong> em nenhum dos scripts revisados; eliminaria a
+dependência de alinhamento binário descrita na Seção 9.</li>
+<li><strong>Extensão a octree 3D completo</strong> — ✅
+<strong>concluído</strong> (Seção 12, <code>octree3d.py</code>), embora
+ainda usando o mesmo teste de homogeneidade por amostragem (não
+geométrico exato) da Seção 5.</li>
+<li><strong>Esquema híbrido</strong> (grafo de fusão da Seção 8 para
+classificação grosseira O(1), refinado por quadtree da Seção 5) — ✅
+<strong>implementado</strong>
+(<code>src/stream/hybrid_partition.hpp</code> da engine, ver Seção 18) e
+<strong>testado com resultado negativo</strong>: para a malha do
+relatório (L=256, k=85), o híbrido usa <strong>2010 nós contra 1673 do
+quadtree puro</strong> — pior, não melhor. Causa: a fusão grosseira
+separa “bloco central” (bounding box pequena) de “resto da malha” (T1+T2
+nos dois cantos opostos), mas a bounding box desse segundo componente
+degenera para quase o tamanho da malha inteira, anulando o ganho do
+Passo 1. O híbrido só compensa quando os componentes fundidos são
+geometricamente compactos — não é o caso desta construção
+específica.</li>
+<li><strong>Dados de ocupação esparsa realistas</strong> (voxels de
+jogos, volumes médicos) — parcialmente endereçado: dados sintéticos
+(esfera, terreno) implementados e validados (Seção 12); dados reais
+permanecem como continuação, por falta de acesso à rede neste
+ambiente.</li>
+<li><strong>Validação do piso teórico para dados incompressíveis (Seção
+12.5)</strong> — a fórmula está confirmada matematicamente, mas o script
+de geração de ruído (<code>make_noise_occ</code>) usa alfabeto binário,
+que produz medições sistematicamente abaixo do piso teórico por
+coincidências de homogeneidade local; um gerador de valores contínuos
+seria necessário para reproduzir o valor específico citado como “medido”
+no relatório.</li>
+</ul>
+<hr />
+<h2 id="status-da-implementação-em-engine-c">18. Status da implementação
+em engine (C++)</h2>
+<p>Paralelamente à validação em Python (Seções 5–13), a mesma matemática
+foi portada para uma engine em C++20 (<code>engine-fluxo/src/</code>),
+estruturada como um Render Loop central que consome os módulos abaixo em
+ordem fixa a cada quadro. O objetivo desta seção é manter rastreável a
+relação entre teoria (este relatório) e implementação — cada módulo
+abaixo cita a seção de origem, e o <code>README.md</code> do repositório
+mantém o log cronológico de mudanças.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Módulo C++</th>
+<th>Seção de origem</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>core::FastMath</code> (<code>TruncaPorMascara</code>,
+<code>TruncaPorShift</code>)</td>
+<td>Seção 7</td>
+<td>✅ implementado, testado</td>
+</tr>
+<tr class="even">
+<td><code>stream::UnionFind</code></td>
+<td>Seção 8</td>
+<td>✅ implementado, réplica de <code>merge_grafo.py</code></td>
+</tr>
+<tr class="odd">
+<td><code>stream::SpatialPartition</code> (Quad/Octree)</td>
+<td>Seções 5, 12</td>
+<td>✅ implementado, amostragem heurística (mesma limitação da Seção
+9)</td>
+</tr>
+<tr class="even">
+<td><code>stream::HybridPartition</code></td>
+<td>Seção 17</td>
+<td>✅ implementado, resultado negativo confirmado (ver acima)</td>
+</tr>
+<tr class="odd">
+<td><code>render::MetricRecovery</code></td>
+<td>Seção 16</td>
+<td>✅ implementado, 0 falhas em 2000 casos aleatórios (C++)</td>
+</tr>
+<tr class="even">
+<td><code>render::BoundingReference</code> (L² − correção)</td>
+<td>Seção 13</td>
+<td>✅ implementado, usa <code>MetricRecovery</code></td>
+</tr>
+<tr class="odd">
+<td><code>stream::WindowController</code> (ring buffer)</td>
+<td>— (arquitetura)</td>
+<td>✅ implementado</td>
+</tr>
+<tr class="even">
+<td><code>core::HardwareProfiler</code></td>
+<td>— (arquitetura)</td>
+<td>⚠️ stub, valores fixos (VRAM/PCIe hardcoded)</td>
+</tr>
+<tr class="odd">
+<td><code>render::ProjectivePipeline</code></td>
+<td>— (arquitetura)</td>
+<td>⚠️ stub, sem API gráfica real (Vulkan/DX12)</td>
+</tr>
+<tr class="even">
+<td><code>stream::SliceStreamer</code></td>
+<td>Seções 5, 9</td>
+<td>⚠️ classifica via quadtree real, mas malha ainda hardcoded (não lê
+disco)</td>
+</tr>
+<tr class="odd">
+<td>Teste de homogeneidade geométrico exato</td>
+<td>Seção 9 (pendência)</td>
+<td>❌ não implementado, nem em Python nem em C++</td>
+</tr>
+</tbody>
+</table>
+<p>Todos os módulos marcados ✅ compilam com <code>g++ -std=c++20</code>
+e têm resultado numérico conferido contra os scripts Python
+correspondentes. O relatório completo de mudanças, incluindo o que foi
+recuperado após perda parcial de contexto entre sessões, está em
+<code>engine-fluxo/README.md</code>.</p>
+</body>
+</html>

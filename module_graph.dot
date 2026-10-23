@@ -1,0 +1,70 @@
+// Grafo de dependências e fluxo de dados - engine-fluxo
+// Renderizar: dot -Tsvg module_graph.dot -o module_graph.svg
+//             dot -Tpng module_graph.dot -o module_graph.png
+//
+// Duas relações representadas:
+//   linha solida  = fluxo de dados em tempo de execucao (Render Loop, por frame)
+//   linha tracejada = dependencia de inicializacao / include (compile-time)
+
+digraph engine_fluxo {
+    rankdir=TB;
+    fontname="Helvetica";
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.15,0.08"];
+    edge [fontname="Helvetica", fontsize=9];
+
+    // ---- Núcleo (Core) ----
+    subgraph cluster_core {
+        label = "core/";
+        style = dashed;
+        color = "#888888";
+        HardwareProfiler [fillcolor="#D3D1C7", label="Core::HardwareProfiler\n{hardware_profiler.hpp/.cpp}"];
+        FastMath         [fillcolor="#D3D1C7", label="Core::FastMath\n{fast_math.hpp/.cpp}"];
+    }
+
+    // ---- Stream ----
+    subgraph cluster_stream {
+        label = "stream/";
+        style = dashed;
+        color = "#888888";
+        WindowController [fillcolor="#9FE1CB", label="Stream::WindowController\n{window_controller.hpp/.cpp}"];
+        RingBuffer        [fillcolor="#9FE1CB", label="Stream::RingBuffer\n{ring_buffer.hpp}"];
+        SliceStreamer     [fillcolor="#9FE1CB", label="Stream::SliceStreamer\n{slice_streamer.hpp/.cpp}"];
+        SpatialPartition  [fillcolor="#9FE1CB", label="Stream::SpatialPartition\n{spatial_partition.hpp}"];
+    }
+
+    // ---- Render ----
+    subgraph cluster_render {
+        label = "render/";
+        style = dashed;
+        color = "#888888";
+        BoundingReference  [fillcolor="#AFA9EC", label="Render::BoundingReference\n{bounding_reference.hpp/.cpp}"];
+        ProjectivePipeline [fillcolor="#AFA9EC", label="Render::ProjectivePipeline\n{projective_pipeline.hpp/.cpp}"];
+    }
+
+    Main   [shape=ellipse, fillcolor="#F0997B", label="main.cpp"];
+    Disk   [shape=folder, fillcolor="#F5C4B3", label="Storage / Disco"];
+    Frame  [shape=ellipse, fillcolor="#F0997B", label="Display / Framebuffer"];
+
+    // ---- Dependências de compilação (quem inclui quem) ----
+    { rank=same; HardwareProfiler; FastMath; }
+    WindowController -> RingBuffer          [style=dashed, label="usa"];
+    SliceStreamer -> SpatialPartition       [style=dashed, label="usa"];
+    SliceStreamer -> FastMath               [style=dashed, label="usa", constraint=false];
+    WindowController -> FastMath            [style=dashed, label="usa (i & R_k)", constraint=false];
+    Main -> HardwareProfiler                [style=dashed, constraint=false];
+    Main -> WindowController                [style=dashed];
+    Main -> SliceStreamer                   [style=dashed, constraint=false];
+    Main -> BoundingReference               [style=dashed, constraint=false];
+    Main -> ProjectivePipeline              [style=dashed, constraint=false];
+
+    // ---- Fluxo de dados em runtime (Render Loop) ----
+    HardwareProfiler -> WindowController    [label="define m (init, 1x)", penwidth=1.5];
+    Disk -> SliceStreamer                   [label="bytes por fatia", penwidth=1.5];
+    SliceStreamer -> WindowController       [label="fatia classificada", penwidth=1.5];
+    WindowController -> BoundingReference   [label="janela ativa (ring buffer)", penwidth=1.5];
+    BoundingReference -> ProjectivePipeline [label="L² - correção", penwidth=1.5];
+    ProjectivePipeline -> Frame             [label="frame projetado", penwidth=1.5];
+
+    // realimentação: posição da câmera fecha o loop
+    Frame -> WindowController [label="posição câmera P(x,y,z) [próximo frame]", style=dotted, constraint=false];
+}
